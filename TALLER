@@ -1,0 +1,136 @@
+public class CuentaBancaria {
+    String titular;
+    double saldo;
+    int numeroTransacciones = 0; 
+    void consignar(double monto) {
+        if (monto <= 0) {
+            System.out.println("El monto a consignar debe ser mayor a cero.");
+            return;
+        }
+        saldo += monto;
+        numeroTransacciones++;
+        System.out.println("Consignación exitosa en la cuenta de " + titular + ". Nuevo saldo: $" + saldo);
+    }
+
+    void retirar(double monto) {
+        if (monto <= 0) {
+            System.out.println("El monto a retirar debe ser mayor a cero.");
+            return;
+        }
+        if (monto <= saldo) {
+            saldo -= monto;
+            numeroTransacciones++;
+            System.out.println("Retiro exitoso de la cuenta de " + titular + ". Nuevo saldo: $" + saldo);
+        } else {
+            System.out.println("Fondos insuficientes en la cuenta de " + titular + ". Saldo actual: $" + saldo);
+        }
+    }
+
+    void transferir(CuentaBancaria destino, double monto) {
+        if (monto <= 0) {
+            System.out.println("El monto a transferir debe ser mayor a cero.");
+            return;
+        }
+        if (monto <= saldo) {
+            this.retirar(monto);
+            destino.consignar(monto);
+            System.out.println("Transferencia realizada con éxito de " + this.titular + " a " + destino.titular);
+        } else {
+            System.out.println("Transferencia fallida: Fondos insuficientes en la cuenta de " + this.titular);
+        }
+    }
+
+    double consultarSaldo() {
+        return saldo;
+    }
+}
+
+
+public class Producto {
+    String nombre;
+    double precio;
+    int stock;
+
+    void registrarVenta(int cantidad) {
+        if (cantidad <= 0) {
+            System.out.println("La cantidad a vender debe ser mayor a cero.");
+            return;
+        }
+        if (cantidad <= stock) {
+            stock -= cantidad;
+            System.out.println("Venta realizada: " + cantidad + " unidad(es) de " + nombre + ".");
+        } else {
+            System.out.println("No hay suficientes unidades disponibles de " + nombre + ". Stock actual: " + stock);
+        }
+    }
+
+    void reponer(int cantidad) {
+        if (cantidad <= 0) {
+            System.out.println("La cantidad a reponer debe ser mayor a cero.");
+            return;
+        }
+        stock += cantidad;
+        System.out.println("Stock repuesto. Nuevo stock de " + nombre + ": " + stock);
+    }
+
+ 
+    void mostrarInformacion() {
+        System.out.println("Producto: " + nombre + " | Precio: $" + precio + " | Stock: " + stock);
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        
+        CuentaBancaria cuenta1 = new CuentaBancaria();
+        cuenta1.titular = "Carlos Pérez";
+        cuenta1.saldo = 50000;
+        System.out.println("Titular: " + cuenta1.titular + " | Saldo inicial: $" + cuenta1.consultarSaldo());
+
+        cuenta1.consignar(20000);
+
+        cuenta1.retirar(30000); 
+        cuenta1.retirar(100000); 
+
+        CuentaBancaria cuenta2 = new CuentaBancaria();
+        cuenta2.titular = "María Gómez";
+        cuenta2.saldo = 100000;
+
+        cuenta1.consignar(10000);
+        System.out.println("\nSaldo Cuenta 1 (" + cuenta1.titular + "): $" + cuenta1.consultarSaldo());
+        System.out.println("Saldo Cuenta 2 (" + cuenta2.titular + "): $" + cuenta2.consultarSaldo());
+
+        System.out.println("\n-- Pruebas de Transferencia y Contadores --");
+        cuenta1.transferir(cuenta2, 15000);
+        System.out.println("Número de transacciones Cuenta 1: " + cuenta1.numeroTransacciones);
+        System.out.println("Número de transacciones Cuenta 2: " + cuenta2.numeroTransacciones);
+        cuenta1.consignar(-5000); 
+
+        System.out.println("\n--- PARTE B: PRUEBAS CLASE PRODUCTO ---");
+        
+        Producto p1 = new Producto();
+        p1.nombre = "Laptop";
+        p1.precio = 2500000;
+        p1.stock = 10;
+
+        Producto p2 = new Producto();
+        p2.nombre = "Mouse";
+        p2.precio = 50000;
+        p2.stock = 25;
+
+        p1.mostrarInformacion();
+        p2.mostrarInformacion();
+
+        System.out.println("\nOperaciones en Laptop:");
+        p1.registrarVenta(3);
+        p1.registrarVenta(10); 
+        p1.reponer(5);
+        p1.mostrarInformacion();
+
+        System.out.println("\nVerificación de independencia en Mouse:");
+        p2.mostrarInformacion(); 
+    }
+}
+
+ V
