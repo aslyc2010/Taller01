@@ -133,4 +133,19 @@ public class Main {
     }
 }
 
- V
+ ¿Cuál es la diferencia entre la clase CuentaBancaria y un objeto CuentaBancaria?  
+ 
+La clase es solo el plano o la plantilla abstracta donde uno define la estructura (qué datos va a tener y qué acciones puede hacer). El objeto es la entidad real que se crea a partir de ese plano, es decir, la cuenta que ya pertenece a alguien y que tiene datos concretos en memoria (como un titular y un saldo real  
+ 
+¿Qué hace exactamente la palabra new?  
+Sirve para crear una nueva instancia de la clase. Lo que hace técnicamente es pedirle al sistema que reserve un bloque de espacio en la memoria RAM para guardar todos los atributos de ese nuevo objeto y dejarlo listo para usarse  
+ 
+Si tienes dos cuentas a yb y ejecutas a.consignar)(1000, ¿cambia el saldo de b? 
+Justifica tu respuesta.  
+No, para nada. Cada objeto es totalmente independiente y guarda sus propios datos en un lugar diferente de la memoria. Operar o cambiar los atributos del objeto a no afecta en lo absoluto a los valores guardados en la cuenta b.  
+ 
+¿Por qué se dice que el método retirar protege el estado del objeto? 
+Porque actúa como una barrera de control. En vez de dejar que se modifique la variable del saldo directamente sin ningún filtro, el método valida primero las reglas (que la cantidad a retirar no sea negativa y que haya dinero suficiente). Si no se cumplen esas condiciones, frena la operación y evita que la cuenta quede en un estado inválido o incoherente. Propón una entidad distinta a las trabajadas e indica dos de sus atributos y dos de sus métodos. 
+●	Entidad: Libro 
+●	Atributos: titulo (texto) y paginasLeidas (entero). 
+●	Métodos: leerPaginas(int cantidad) y reiniciarLectura() 
